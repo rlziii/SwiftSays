@@ -2,7 +2,7 @@ import Combine
 
 class GameViewModel: ObservableObject {
     @Published private(set) var gameInput: [Tile] = []
-    @Published private var gameIsFinished = false
+    @Published var gameIsFinished = false
     @Published private(set) var allowUserInput = false
     private var userInput: [Tile] = []
 
@@ -20,6 +20,14 @@ class GameViewModel: ObservableObject {
 
     func playSound(for tile: Tile) {
         audioPlayer.playSound(for: tile)
+    }
+
+    func resetGame() {
+        gameInput = []
+        gameIsFinished = false
+        allowUserInput = false
+        userInput = []
+        nextGameLoop()
     }
 
     private func nextGameLoop() {

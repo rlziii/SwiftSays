@@ -56,6 +56,9 @@ struct GameView: View {
                 }
             }
         }
+        .alert("Game over!", isPresented: $viewModel.gameIsFinished) {
+            Button("Reset Game", action: viewModel.resetGame)
+        }
     }
 }
 
