@@ -13,6 +13,7 @@
 		80D0C0612807D052001C6D29 /* GameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80D0C0602807D052001C6D29 /* GameViewModel.swift */; };
 		80D0C0632807D077001C6D29 /* AudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80D0C0622807D077001C6D29 /* AudioPlayer.swift */; };
 		80D0C0652807D098001C6D29 /* Tile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80D0C0642807D098001C6D29 /* Tile.swift */; };
+		80D0C0682807DEE1001C6D29 /* TaskExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80D0C0672807DEE1001C6D29 /* TaskExtensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,6 +24,7 @@
 		80D0C0602807D052001C6D29 /* GameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewModel.swift; sourceTree = "<group>"; };
 		80D0C0622807D077001C6D29 /* AudioPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayer.swift; sourceTree = "<group>"; };
 		80D0C0642807D098001C6D29 /* Tile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tile.swift; sourceTree = "<group>"; };
+		80D0C0672807DEE1001C6D29 /* TaskExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskExtensions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +58,7 @@
 			isa = PBXGroup;
 			children = (
 				80C7EDC528065A27000584BF /* App Files */,
+				80D0C0662807DED6001C6D29 /* Extensions */,
 				80D0C05F2807D03B001C6D29 /* Other */,
 				80C7EDC628065A2C000584BF /* User Interface */,
 			);
@@ -87,6 +90,14 @@
 				80D0C0622807D077001C6D29 /* AudioPlayer.swift */,
 			);
 			path = Other;
+			sourceTree = "<group>";
+		};
+		80D0C0662807DED6001C6D29 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				80D0C0672807DEE1001C6D29 /* TaskExtensions.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -160,6 +171,7 @@
 			files = (
 				80D0C0612807D052001C6D29 /* GameViewModel.swift in Sources */,
 				80C7EDBA280659E1000584BF /* GameView.swift in Sources */,
+				80D0C0682807DEE1001C6D29 /* TaskExtensions.swift in Sources */,
 				80D0C0652807D098001C6D29 /* Tile.swift in Sources */,
 				80C7EDB8280659E1000584BF /* Application.swift in Sources */,
 				80D0C0632807D077001C6D29 /* AudioPlayer.swift in Sources */,

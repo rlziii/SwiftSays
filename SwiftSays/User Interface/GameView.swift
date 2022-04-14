@@ -41,24 +41,24 @@ struct GameView: View {
         }
         .onChange(of: viewModel.gameInput) { gameInput in
             Task {
-                try! await Task.sleep(nanoseconds: 500_000_000) // 0.5s
+                try! await Task.sleep(seconds: 0.5)
 
-                let stream = AsyncStream(Tile.self) { continuation in
-                    gameInput.forEach { continuation.yield($0) }
-                }
-
-                for await tile in stream {
+                for tile in gameInput {
                     highlightedTile = tile
                     viewModel.playSound(for: tile)
-                    try! await Task.sleep(nanoseconds: 300_000_000) // 0.3s
+                    try! await Task.sleep(seconds: 0.3)
                     highlightedTile = nil
-                    try! await Task.sleep(nanoseconds: 100_000_000) // 0.1s
+                    try! await Task.sleep(seconds: 0.1)
                 }
             }
         }
         .alert("Game over!", isPresented: $viewModel.gameIsFinished) {
             Button("Reset Game", action: viewModel.resetGame)
         }
+    }
+
+    private func sleep(seconds: Double) async {
+
     }
 }
 
