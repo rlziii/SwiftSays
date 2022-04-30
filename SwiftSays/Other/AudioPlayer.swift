@@ -20,22 +20,28 @@ class AudioPlayer {
 
     @MainActor @Sendable
     func playSound(for tile: Tile) async throws {
-        // https://computermusicresource.com/midikeys.html
-        let note: UInt8 = {
-            switch tile {
-            case .green:
-                return 64 // E (3rd octave)
-            case .red:
-                return 61 // C# (3rd octave)
-            case .yellow:
-                return 69 // A (3rd octave)
-            case .blue:
-                return 52 // E (2nd octave)
-            }
-        }()
+        let note = midiNote(for: tile)
 
         sampler.startNote(note, withVelocity: 127, onChannel: 0)
         try await Task.sleep(seconds: 0.3)
         sampler.stopNote(note, onChannel: 0)
+    }
+
+    private func midiNote(for tile: Tile) -> UInt8 {
+        // https://computermusicresource.com/midikeys.html
+        switch tile {
+        case .green:
+            // E (3rd octave)
+            return 64
+        case .red:
+            // C# (3rd octave)
+            return 61
+        case .yellow:
+            // A (3rd octave)
+            return 69
+        case .blue:
+            // E (2nd octave)
+            return 52
+        }
     }
 }

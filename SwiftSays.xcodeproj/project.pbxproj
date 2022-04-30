@@ -14,6 +14,8 @@
 		80D0C0632807D077001C6D29 /* AudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80D0C0622807D077001C6D29 /* AudioPlayer.swift */; };
 		80D0C0652807D098001C6D29 /* Tile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80D0C0642807D098001C6D29 /* Tile.swift */; };
 		80D0C0682807DEE1001C6D29 /* TaskExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80D0C0672807DEE1001C6D29 /* TaskExtensions.swift */; };
+		80E4AEDE281CE6C9007E5D8D /* TileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80E4AEDD281CE6C9007E5D8D /* TileView.swift */; };
+		80E4AEE0281CE920007E5D8D /* CenterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80E4AEDF281CE920007E5D8D /* CenterView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,6 +27,8 @@
 		80D0C0622807D077001C6D29 /* AudioPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayer.swift; sourceTree = "<group>"; };
 		80D0C0642807D098001C6D29 /* Tile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tile.swift; sourceTree = "<group>"; };
 		80D0C0672807DEE1001C6D29 /* TaskExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskExtensions.swift; sourceTree = "<group>"; };
+		80E4AEDD281CE6C9007E5D8D /* TileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TileView.swift; sourceTree = "<group>"; };
+		80E4AEDF281CE920007E5D8D /* CenterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CenterView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,9 +81,10 @@
 		80C7EDC628065A2C000584BF /* User Interface */ = {
 			isa = PBXGroup;
 			children = (
+				80E4AEDF281CE920007E5D8D /* CenterView.swift */,
 				80C7EDB9280659E1000584BF /* GameView.swift */,
 				80D0C0602807D052001C6D29 /* GameViewModel.swift */,
-				80D0C0642807D098001C6D29 /* Tile.swift */,
+				80E4AEDD281CE6C9007E5D8D /* TileView.swift */,
 			);
 			path = "User Interface";
 			sourceTree = "<group>";
@@ -88,6 +93,7 @@
 			isa = PBXGroup;
 			children = (
 				80D0C0622807D077001C6D29 /* AudioPlayer.swift */,
+				80D0C0642807D098001C6D29 /* Tile.swift */,
 			);
 			path = Other;
 			sourceTree = "<group>";
@@ -170,11 +176,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				80D0C0612807D052001C6D29 /* GameViewModel.swift in Sources */,
+				80E4AEDE281CE6C9007E5D8D /* TileView.swift in Sources */,
 				80C7EDBA280659E1000584BF /* GameView.swift in Sources */,
 				80D0C0682807DEE1001C6D29 /* TaskExtensions.swift in Sources */,
 				80D0C0652807D098001C6D29 /* Tile.swift in Sources */,
 				80C7EDB8280659E1000584BF /* Application.swift in Sources */,
 				80D0C0632807D077001C6D29 /* AudioPlayer.swift in Sources */,
+				80E4AEE0281CE920007E5D8D /* CenterView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

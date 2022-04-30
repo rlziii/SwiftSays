@@ -11,13 +11,13 @@ struct GameView: View {
                     .green,
                     enabled: $viewModel.allowUserInput,
                     highlighted: highlightedTile == .green,
-                    tapped: { try await viewModel.tapped(tile: .green) }
+                    action: { try await viewModel.tapped(tile: .green) }
                 )
                 TileView(
                     .red,
                     enabled: $viewModel.allowUserInput,
                     highlighted: highlightedTile == .red,
-                    tapped: { try await viewModel.tapped(tile: .red) }
+                    action: { try await viewModel.tapped(tile: .red) }
                 )
             }
 
@@ -26,16 +26,18 @@ struct GameView: View {
                     .yellow,
                     enabled: $viewModel.allowUserInput,
                     highlighted: highlightedTile == .yellow,
-                    tapped: { try await viewModel.tapped(tile: .yellow) }
+                    action: { try await viewModel.tapped(tile: .yellow) }
                 )
                 TileView(
                     .blue,
                     enabled: $viewModel.allowUserInput,
                     highlighted: highlightedTile == .blue,
-                    tapped: { try await viewModel.tapped(tile: .blue) }
+                    action: { try await viewModel.tapped(tile: .blue) }
                 )
             }
         }
+        .clipShape(Circle())
+        .overlay(CenterView())
         .onAppear {
             viewModel.startGame()
         }
@@ -57,50 +59,6 @@ struct GameView: View {
         .alert("Game over!", isPresented: $viewModel.gameIsFinished) {
             Button("Reset Game", action: viewModel.resetGame)
         }
-    }
-
-    private func sleep(seconds: Double) async {
-
-    }
-}
-
-struct TileView: View {
-    let tile: Tile
-    @Binding var enabled: Bool
-    let highlighted: Bool
-    let tapped: () async throws -> Void
-
-    private var color: Color {
-        switch tile {
-        case .green:
-            return .green
-        case .red:
-            return .red
-        case .yellow:
-            return .yellow
-        case .blue:
-            return .blue
-        }
-    }
-
-    init(_ tile: Tile, enabled: Binding<Bool>, highlighted: Bool, tapped: @escaping () async throws -> Void) {
-        self.tile = tile
-        self._enabled = enabled
-        self.highlighted = highlighted
-        self.tapped = tapped
-    }
-
-    var body: some View {
-        Button {
-            Task {
-                try await tapped()
-            }
-        } label: {
-            color
-                .scaledToFit()
-                .overlay(highlighted ? Color.black.opacity(0.3) : nil)
-        }
-        .disabled(!enabled)
     }
 }
 
