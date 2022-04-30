@@ -1,25 +1,33 @@
-import Combine
+import Foundation
 
 class GameViewModel: ObservableObject {
     @Published private(set) var gameInput: [Tile] = []
     @Published var gameIsFinished = false
-    @Published private(set) var allowUserInput = false
+    @Published var allowUserInput = false
     private var userInput: [Tile] = []
 
-    private let audioPlayer = AudioPlayer()
+    private let audioPlayer: AudioPlayer
+
+    init() {
+        guard let audioPlayer = AudioPlayer() else {
+            fatalError("Could not create \(AudioPlayer.self) for \(GameViewModel.self).")
+        }
+
+        self.audioPlayer = audioPlayer
+    }
 
     func startGame() {
         nextGameLoop()
     }
 
-    func tapped(tile: Tile) {
-        playSound(for: tile)
+    func tapped(tile: Tile) async throws {
+        try await playSound(for: tile)
         userInput.append(tile)
         nextGameLoop()
     }
 
-    func playSound(for tile: Tile) {
-        audioPlayer.playSound(for: tile)
+    func playSound(for tile: Tile) async throws {
+        try await audioPlayer.playSound(for: tile)
     }
 
     func resetGame() {
@@ -59,9 +67,7 @@ class GameViewModel: ObservableObject {
     }
 
     private func checkOutcome() {
-        // Can this just check last element?
         if gameInput == userInput {
-            allowUserInput = false
             randomGameInput()
         } else {
             endGame()
@@ -70,7 +76,6 @@ class GameViewModel: ObservableObject {
 
     private func endGame() {
         gameIsFinished = true
-        allowUserInput = false
         print("Game over!")
     }
 }

@@ -9,30 +9,30 @@ struct GameView: View {
             HStack(spacing: 0) {
                 TileView(
                     .green,
-                    enabled: viewModel.allowUserInput,
+                    enabled: $viewModel.allowUserInput,
                     highlighted: highlightedTile == .green,
-                    tapped: { viewModel.tapped(tile: .green) }
+                    tapped: { try await viewModel.tapped(tile: .green) }
                 )
                 TileView(
                     .red,
-                    enabled: viewModel.allowUserInput,
+                    enabled: $viewModel.allowUserInput,
                     highlighted: highlightedTile == .red,
-                    tapped: { viewModel.tapped(tile: .red) }
+                    tapped: { try await viewModel.tapped(tile: .red) }
                 )
             }
 
             HStack(spacing: 0) {
                 TileView(
                     .yellow,
-                    enabled: viewModel.allowUserInput,
+                    enabled: $viewModel.allowUserInput,
                     highlighted: highlightedTile == .yellow,
-                    tapped: { viewModel.tapped(tile: .yellow) }
+                    tapped: { try await viewModel.tapped(tile: .yellow) }
                 )
                 TileView(
                     .blue,
-                    enabled: viewModel.allowUserInput,
+                    enabled: $viewModel.allowUserInput,
                     highlighted: highlightedTile == .blue,
-                    tapped: { viewModel.tapped(tile: .blue) }
+                    tapped: { try await viewModel.tapped(tile: .blue) }
                 )
             }
         }
@@ -41,15 +41,17 @@ struct GameView: View {
         }
         .onChange(of: viewModel.gameInput) { gameInput in
             Task {
-                try! await Task.sleep(seconds: 0.5)
+                try await Task.sleep(seconds: 0.5)
 
+                viewModel.allowUserInput = false
                 for tile in gameInput {
                     highlightedTile = tile
-                    viewModel.playSound(for: tile)
-                    try! await Task.sleep(seconds: 0.3)
+                    try await viewModel.playSound(for: tile)
+                    try await Task.sleep(seconds: 0.3)
                     highlightedTile = nil
-                    try! await Task.sleep(seconds: 0.1)
+                    try await Task.sleep(seconds: 0.1)
                 }
+                viewModel.allowUserInput = true
             }
         }
         .alert("Game over!", isPresented: $viewModel.gameIsFinished) {
@@ -64,9 +66,9 @@ struct GameView: View {
 
 struct TileView: View {
     let tile: Tile
-    let enabled: Bool
+    @Binding var enabled: Bool
     let highlighted: Bool
-    let tapped: () -> Void
+    let tapped: () async throws -> Void
 
     private var color: Color {
         switch tile {
@@ -81,17 +83,21 @@ struct TileView: View {
         }
     }
 
-    init(_ tile: Tile, enabled: Bool, highlighted: Bool, tapped: @escaping () -> Void) {
+    init(_ tile: Tile, enabled: Binding<Bool>, highlighted: Bool, tapped: @escaping () async throws -> Void) {
         self.tile = tile
-        self.enabled = enabled
+        self._enabled = enabled
         self.highlighted = highlighted
         self.tapped = tapped
     }
 
     var body: some View {
-        Button(action: tapped) {
+        Button {
+            Task {
+                try await tapped()
+            }
+        } label: {
             color
-                .aspectRatio(1.0, contentMode: .fit)
+                .scaledToFit()
                 .overlay(highlighted ? Color.black.opacity(0.3) : nil)
         }
         .disabled(!enabled)
