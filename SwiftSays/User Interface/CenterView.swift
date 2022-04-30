@@ -4,11 +4,12 @@ struct CenterView: View {
     var body: some View {
         Circle()
             .scale(0.3)
+            .fill(.black)
             .overlay {
                 Image(systemName: "swift")
+                    .foregroundColor(.white)
                     .font(.largeTitle)
-                    .foregroundColor(.primary)
-                    .colorInvert()
+                    .dynamicTypeSize(.accessibility5)
             }
     }
 }

@@ -60,7 +60,6 @@ class GameViewModel: ObservableObject {
         clearUserInput()
 
         let tile = Tile.allCases.randomElement()!
-        print(tile)
         gameInput.append(tile)
 
         nextGameLoop()
@@ -76,6 +75,5 @@ class GameViewModel: ObservableObject {
 
     private func endGame() {
         gameIsFinished = true
-        print("Game over!")
     }
 }

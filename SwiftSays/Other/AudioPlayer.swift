@@ -20,11 +20,19 @@ class AudioPlayer {
 
     @MainActor @Sendable
     func playSound(for tile: Tile) async throws {
+        stopAllNotes()
+
         let note = midiNote(for: tile)
 
         sampler.startNote(note, withVelocity: 127, onChannel: 0)
         try await Task.sleep(seconds: 0.3)
         sampler.stopNote(note, onChannel: 0)
+    }
+
+    func stopAllNotes() {
+        Tile.allCases.map(midiNote).forEach {
+            sampler.stopNote($0, onChannel: 0)
+        }
     }
 
     private func midiNote(for tile: Tile) -> UInt8 {
