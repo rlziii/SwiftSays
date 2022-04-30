@@ -38,6 +38,7 @@ struct GameView: View {
         }
         .clipShape(Circle())
         .overlay(CenterView())
+        .padding(5)
         .onAppear {
             viewModel.startGame()
         }
