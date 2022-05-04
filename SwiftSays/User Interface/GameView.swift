@@ -5,40 +5,44 @@ struct GameView: View {
     @State private var highlightedTile: Tile?
 
     var body: some View {
-        VStack(spacing: 0) {
-            HStack(spacing: 0) {
-                TileView(
-                    .green,
-                    enabled: $viewModel.allowUserInput,
-                    highlighted: highlightedTile == .green,
-                    action: { try await viewModel.tapped(tile: .green) }
-                )
-                TileView(
-                    .red,
-                    enabled: $viewModel.allowUserInput,
-                    highlighted: highlightedTile == .red,
-                    action: { try await viewModel.tapped(tile: .red) }
-                )
-            }
+        VStack {
+            VStack(spacing: 0) {
+                HStack(spacing: 0) {
+                    TileView(
+                        .green,
+                        enabled: $viewModel.allowUserInput,
+                        highlighted: highlightedTile == .green,
+                        action: { try await viewModel.tapped(tile: .green) }
+                    )
+                    TileView(
+                        .red,
+                        enabled: $viewModel.allowUserInput,
+                        highlighted: highlightedTile == .red,
+                        action: { try await viewModel.tapped(tile: .red) }
+                    )
+                }
 
-            HStack(spacing: 0) {
-                TileView(
-                    .yellow,
-                    enabled: $viewModel.allowUserInput,
-                    highlighted: highlightedTile == .yellow,
-                    action: { try await viewModel.tapped(tile: .yellow) }
-                )
-                TileView(
-                    .blue,
-                    enabled: $viewModel.allowUserInput,
-                    highlighted: highlightedTile == .blue,
-                    action: { try await viewModel.tapped(tile: .blue) }
-                )
+                HStack(spacing: 0) {
+                    TileView(
+                        .yellow,
+                        enabled: $viewModel.allowUserInput,
+                        highlighted: highlightedTile == .yellow,
+                        action: { try await viewModel.tapped(tile: .yellow) }
+                    )
+                    TileView(
+                        .blue,
+                        enabled: $viewModel.allowUserInput,
+                        highlighted: highlightedTile == .blue,
+                        action: { try await viewModel.tapped(tile: .blue) }
+                    )
+                }
             }
+            .clipShape(Circle())
+            .overlay(CenterView())
+            .padding(5)
+
+            Text("Level: \(viewModel.currentCount)")
         }
-        .clipShape(Circle())
-        .overlay(CenterView())
-        .padding(5)
         .onAppear {
             viewModel.startGame()
         }
