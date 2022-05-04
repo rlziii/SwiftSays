@@ -4,8 +4,10 @@ class GameViewModel: ObservableObject {
     @Published private(set) var gameInput: [Tile] = []
     @Published var gameIsFinished = false
     @Published var allowUserInput = false
-    private var userInput: [Tile] = []
 
+    var currentCount: Int { gameInput.count }
+
+    private var userInput: [Tile] = []
     private let audioPlayer: AudioPlayer
 
     init() {
@@ -49,6 +51,7 @@ class GameViewModel: ObservableObject {
             checkOutcome()
         } else {
             allowUserInput = true
+            checkCurrentInput()
         }
     }
 
@@ -63,6 +66,18 @@ class GameViewModel: ObservableObject {
         gameInput.append(tile)
 
         nextGameLoop()
+    }
+
+    private func checkCurrentInput() {
+        let index = userInput.endIndex - 1
+
+        guard userInput.indices.contains(index) && gameInput.indices.contains(index) else {
+            return
+        }
+
+        if userInput[index] != gameInput[index] {
+            endGame()
+        }
     }
 
     private func checkOutcome() {
