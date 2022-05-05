@@ -1,6 +1,8 @@
 import Foundation
 
 class GameViewModel: ObservableObject {
+    // MARK: - Public Properties
+
     @Published private(set) var gameInput: [Tile] = []
     @Published private(set) var allowUserInput = false
     @Published private(set) var highlightedTile: Tile?
@@ -8,9 +10,12 @@ class GameViewModel: ObservableObject {
 
     var currentLevel: Int { gameInput.count - 1 }
 
+    // MARK: - Private Properties
+
     private var userInput: [Tile] = []
     private let audioPlayer: AudioPlayer
 
+    // MARK: - Initialization
     init() {
         guard let audioPlayer = AudioPlayer() else {
             fatalError("Could not create \(AudioPlayer.self) for \(GameViewModel.self).")
@@ -19,13 +24,9 @@ class GameViewModel: ObservableObject {
         self.audioPlayer = audioPlayer
     }
 
-    func startGame() {
-        nextGameLoop()
-    }
+    // MARK: - Public Methods
 
-    func action(for tile: Tile) async throws {
-        try await playSound(for: tile)
-        userInput.append(tile)
+    func startGame() {
         nextGameLoop()
     }
 
@@ -38,6 +39,14 @@ class GameViewModel: ObservableObject {
         nextGameLoop()
     }
 
+    func action(for tile: Tile) async throws {
+        try await audioPlayer.playSound(for: tile)
+        userInput.append(tile)
+        nextGameLoop()
+    }
+
+    // MARK: - Private Methods
+
     private func nextGameLoop() {
         guard !gameIsFinished else {
             return
@@ -45,22 +54,23 @@ class GameViewModel: ObservableObject {
 
         if gameInput.isEmpty {
             randomGameInput()
-        } else {
-            allowUserInput = true
+        } else if userInput.isEmpty {
+            // Do nothing.
+        } else if gameInput.count != userInput.count {
             checkCurrentInput()
+        } else if gameInput.count == userInput.count {
+            checkCurrentInput()
+
+            if !gameIsFinished {
+                randomGameInput()
+            }
+        } else {
+            assertionFailure("Unexpected state.")
         }
     }
 
-    private func playSound(for tile: Tile) async throws {
-        try await audioPlayer.playSound(for: tile)
-    }
-
-    private func clearUserInput() {
-        userInput = []
-    }
-
     private func randomGameInput() {
-        clearUserInput()
+        userInput = []
 
         let tile = Tile.allCases.randomElement()!
         gameInput.append(tile)
@@ -77,7 +87,7 @@ class GameViewModel: ObservableObject {
         allowUserInput = false
         for tile in gameInput {
             highlightedTile = tile
-            try await playSound(for: tile)
+            try await audioPlayer.playSound(for: tile)
             try await Task.sleep(seconds: 0.3)
             highlightedTile = nil
             try await Task.sleep(seconds: 0.1)
@@ -89,19 +99,12 @@ class GameViewModel: ObservableObject {
         let index = userInput.endIndex - 1
 
         guard userInput.indices.contains(index) && gameInput.indices.contains(index) else {
+            assertionFailure("Unexpected state.")
             return
         }
 
         if userInput[index] != gameInput[index] {
-            endGame()
+            gameIsFinished = true
         }
-
-        if !gameIsFinished, userInput.endIndex == gameInput.endIndex {
-            randomGameInput()
-        }
-    }
-
-    private func endGame() {
-        gameIsFinished = true
     }
 }
