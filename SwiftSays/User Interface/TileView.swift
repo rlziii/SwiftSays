@@ -2,7 +2,6 @@ import SwiftUI
 
 struct TileView: View {
     let tile: Tile
-    @Binding var enabled: Bool
     let highlighted: Bool
     let action: () async throws -> Void
 
@@ -19,9 +18,8 @@ struct TileView: View {
         }
     }
 
-    init(_ tile: Tile, enabled: Binding<Bool>, highlighted: Bool, action: @escaping () async throws -> Void) {
+    init(_ tile: Tile, highlighted: Bool, action: @escaping () async throws -> Void) {
         self.tile = tile
-        self._enabled = enabled
         self.highlighted = highlighted
         self.action = action
     }
@@ -36,7 +34,6 @@ struct TileView: View {
                 .scaledToFit()
                 .overlay(highlighted ? Color.black.opacity(0.3) : nil)
         }
-        .disabled(!enabled)
     }
 }
 
@@ -44,28 +41,24 @@ struct TileView_Previews: PreviewProvider {
     static var previews: some View {
         TileView(
             .green,
-            enabled: .constant(true),
             highlighted: false,
             action: {}
         )
         .previewLayout(.sizeThatFits)
         TileView(
             .red,
-            enabled: .constant(true),
             highlighted: false,
             action: {}
         )
         .previewLayout(.sizeThatFits)
         TileView(
             .yellow,
-            enabled: .constant(true),
             highlighted: false,
             action: {}
         )
         .previewLayout(.sizeThatFits)
         TileView(
             .blue,
-            enabled: .constant(true),
             highlighted: false,
             action: {}
         )
