@@ -3,7 +3,6 @@ import Foundation
 class GameViewModel: ObservableObject {
     // MARK: - Public Properties
 
-    @Published private(set) var gameInput: [Tile] = []
     @Published private(set) var allowUserInput = false
     @Published private(set) var highlightedTile: Tile?
     @Published var gameIsFinished = false
@@ -12,10 +11,12 @@ class GameViewModel: ObservableObject {
 
     // MARK: - Private Properties
 
+    private var gameInput: [Tile] = []
     private var userInput: [Tile] = []
     private let audioPlayer: AudioPlayer
 
     // MARK: - Initialization
+
     init() {
         guard let audioPlayer = AudioPlayer() else {
             fatalError("Could not create \(AudioPlayer.self) for \(GameViewModel.self).")
@@ -27,7 +28,7 @@ class GameViewModel: ObservableObject {
     // MARK: - Public Methods
 
     func startGame() {
-        nextGameLoop()
+        advanceGameLoop()
     }
 
     func resetGame() {
@@ -36,24 +37,24 @@ class GameViewModel: ObservableObject {
         gameIsFinished = false
         allowUserInput = false
 
-        nextGameLoop()
+        advanceGameLoop()
     }
 
     func action(for tile: Tile) async throws {
         try await audioPlayer.playSound(for: tile)
         userInput.append(tile)
-        nextGameLoop()
+        advanceGameLoop()
     }
 
     // MARK: - Private Methods
 
-    private func nextGameLoop() {
+    private func advanceGameLoop() {
         guard !gameIsFinished else {
             return
         }
 
         if gameInput.isEmpty {
-            randomGameInput()
+            nextGameInput()
         } else if userInput.isEmpty {
             // Do nothing.
         } else if gameInput.count != userInput.count {
@@ -62,14 +63,14 @@ class GameViewModel: ObservableObject {
             checkCurrentInput()
 
             if !gameIsFinished {
-                randomGameInput()
+                nextGameInput()
             }
         } else {
             assertionFailure("Unexpected state.")
         }
     }
 
-    private func randomGameInput() {
+    private func nextGameInput() {
         userInput = []
 
         let tile = Tile.allCases.randomElement()!
@@ -77,7 +78,7 @@ class GameViewModel: ObservableObject {
 
         Task { try await highlightGameInputs() }
 
-        nextGameLoop()
+        advanceGameLoop()
     }
 
     @MainActor
