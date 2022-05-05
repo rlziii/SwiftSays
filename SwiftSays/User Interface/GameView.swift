@@ -20,6 +20,8 @@ struct GameView: View {
             Spacer()
 
             Button("Reset", action: game.resetGame)
+                .buttonStyle(.borderedProminent)
+                .cornerRadius(.infinity)
         }
         .onAppear(perform: game.startGame)
         .alert("Game over!", isPresented: $game.gameIsFinished) {
