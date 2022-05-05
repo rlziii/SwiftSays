@@ -1,8 +1,12 @@
 import AVFAudio
 
 class AudioPlayer {
+    // MARK: - Private Properties
+
     private let engine: AVAudioEngine
     private let sampler: AVAudioUnitSampler
+
+    // MARK: - Initialization
 
     init?() {
         do {
@@ -18,7 +22,9 @@ class AudioPlayer {
         }
     }
 
-    @MainActor @Sendable
+    // MARK: - Public Methods
+
+    @MainActor
     func playSound(for tile: Tile) async throws {
         stopAllNotes()
 
@@ -29,7 +35,9 @@ class AudioPlayer {
         sampler.stopNote(note, onChannel: 0)
     }
 
-    func stopAllNotes() {
+    // MARK: - Private Methods
+
+    private func stopAllNotes() {
         Tile.allCases.map(midiNote).forEach {
             sampler.stopNote($0, onChannel: 0)
         }

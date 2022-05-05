@@ -8,10 +8,11 @@ struct GameView: View {
             Spacer()
 
             StackedTileView(
-                allowUserInput: game.allowUserInput,
                 highlightedTile: game.highlightedTile,
                 action: game.action
             )
+            .overlay(CenterView())
+            .disabled(!game.allowUserInput)
 
             Text("Level: \(game.currentLevel)")
                 .font(.title)

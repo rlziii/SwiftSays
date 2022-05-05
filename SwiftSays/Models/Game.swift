@@ -7,7 +7,7 @@ class Game: ObservableObject {
     @Published private(set) var highlightedTile: Tile?
     @Published var gameIsFinished = false
 
-    var currentLevel: Int { gameInput.count - 1 }
+    var currentLevel: Int { max(0, gameInput.count - 1) }
 
     // MARK: - Private Properties
 
@@ -56,21 +56,22 @@ class Game: ObservableObject {
         if gameInput.isEmpty {
             nextGameInput()
         } else if userInput.isEmpty {
-            // Do nothing.
+            // Waiting on user input...
         } else if gameInput.count != userInput.count {
             checkCurrentInput()
         } else if gameInput.count == userInput.count {
             checkCurrentInput()
-
-            if !gameIsFinished {
-                nextGameInput()
-            }
+            nextGameInput()
         } else {
             assertionFailure("Unexpected state.")
         }
     }
 
     private func nextGameInput() {
+        guard !gameIsFinished else {
+            return
+        }
+
         userInput = []
 
         let tile = Tile.allCases.randomElement()!

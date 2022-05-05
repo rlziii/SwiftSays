@@ -18,5 +18,6 @@ struct CenterView_Previews: PreviewProvider {
     static var previews: some View {
         CenterView()
             .previewLayout(.sizeThatFits)
+            .scaledToFit()
     }
 }

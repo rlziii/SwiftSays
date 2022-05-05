@@ -1,7 +1,6 @@
 import SwiftUI
 
 struct StackedTileView: View {
-    let allowUserInput: Bool
     let highlightedTile: Tile?
     let action: (Tile) async throws -> Void
 
@@ -34,18 +33,16 @@ struct StackedTileView: View {
             }
         }
         .clipShape(Circle())
-        .overlay(CenterView())
         .padding(5)
-        .disabled(!allowUserInput)
     }
 }
 
 struct StackedTileView_Previews: PreviewProvider {
     static var previews: some View {
         StackedTileView(
-            allowUserInput: true,
             highlightedTile: .none,
             action: { _ in }
         )
+        .previewLayout(.sizeThatFits)
     }
 }
