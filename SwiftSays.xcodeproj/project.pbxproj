@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		80B60E6328236C310028E618 /* StackedTileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B60E6228236C310028E618 /* StackedTileView.swift */; };
 		80C7EDB8280659E1000584BF /* Application.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C7EDB7280659E1000584BF /* Application.swift */; };
 		80C7EDBA280659E1000584BF /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C7EDB9280659E1000584BF /* GameView.swift */; };
 		80C7EDBC280659E2000584BF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 80C7EDBB280659E2000584BF /* Assets.xcassets */; };
@@ -19,6 +20,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		80B60E6228236C310028E618 /* StackedTileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StackedTileView.swift; sourceTree = "<group>"; };
 		80C7EDB4280659E1000584BF /* SwiftSays.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftSays.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		80C7EDB7280659E1000584BF /* Application.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Application.swift; sourceTree = "<group>"; };
 		80C7EDB9280659E1000584BF /* GameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
@@ -84,6 +86,7 @@
 				80E4AEDF281CE920007E5D8D /* CenterView.swift */,
 				80C7EDB9280659E1000584BF /* GameView.swift */,
 				80D0C0602807D052001C6D29 /* GameViewModel.swift */,
+				80B60E6228236C310028E618 /* StackedTileView.swift */,
 				80E4AEDD281CE6C9007E5D8D /* TileView.swift */,
 			);
 			path = "User Interface";
@@ -177,6 +180,7 @@
 			files = (
 				80D0C0612807D052001C6D29 /* GameViewModel.swift in Sources */,
 				80E4AEDE281CE6C9007E5D8D /* TileView.swift in Sources */,
+				80B60E6328236C310028E618 /* StackedTileView.swift in Sources */,
 				80C7EDBA280659E1000584BF /* GameView.swift in Sources */,
 				80D0C0682807DEE1001C6D29 /* TaskExtensions.swift in Sources */,
 				80D0C0652807D098001C6D29 /* Tile.swift in Sources */,

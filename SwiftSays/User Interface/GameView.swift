@@ -7,37 +7,11 @@ struct GameView: View {
         VStack {
             Spacer()
 
-            VStack(spacing: 0) {
-                HStack(spacing: 0) {
-                    TileView(
-                        .green,
-                        highlighted: viewModel.highlightedTile == .green,
-                        action: { try await viewModel.action(for: .green) }
-                    )
-                    TileView(
-                        .red,
-                        highlighted: viewModel.highlightedTile == .red,
-                        action: { try await viewModel.action(for: .red) }
-                    )
-                }
-
-                HStack(spacing: 0) {
-                    TileView(
-                        .yellow,
-                        highlighted: viewModel.highlightedTile == .yellow,
-                        action: { try await viewModel.action(for: .yellow) }
-                    )
-                    TileView(
-                        .blue,
-                        highlighted: viewModel.highlightedTile == .blue,
-                        action: { try await viewModel.action(for: .blue) }
-                    )
-                }
-            }
-            .clipShape(Circle())
-            .overlay(CenterView())
-            .padding(5)
-            .disabled(!viewModel.allowUserInput)
+            StackedTileView(
+                allowUserInput: viewModel.allowUserInput,
+                highlightedTile: viewModel.highlightedTile,
+                action: viewModel.action
+            )
 
             Text("Level: \(viewModel.currentLevel)")
                 .font(.title)
