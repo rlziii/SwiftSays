@@ -1,6 +1,6 @@
 import Foundation
 
-class GameViewModel: ObservableObject {
+class Game: ObservableObject {
     // MARK: - Public Properties
 
     @Published private(set) var allowUserInput = false
@@ -19,7 +19,7 @@ class GameViewModel: ObservableObject {
 
     init() {
         guard let audioPlayer = AudioPlayer() else {
-            fatalError("Could not create \(AudioPlayer.self) for \(GameViewModel.self).")
+            fatalError("Could not create \(AudioPlayer.self) for \(Game.self).")
         }
 
         self.audioPlayer = audioPlayer

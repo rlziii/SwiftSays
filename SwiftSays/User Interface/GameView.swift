@@ -1,34 +1,34 @@
 import SwiftUI
 
 struct GameView: View {
-    @StateObject var viewModel = GameViewModel()
+    @ObservedObject var game: Game
 
     var body: some View {
         VStack {
             Spacer()
 
             StackedTileView(
-                allowUserInput: viewModel.allowUserInput,
-                highlightedTile: viewModel.highlightedTile,
-                action: viewModel.action
+                allowUserInput: game.allowUserInput,
+                highlightedTile: game.highlightedTile,
+                action: game.action
             )
 
-            Text("Level: \(viewModel.currentLevel)")
+            Text("Level: \(game.currentLevel)")
                 .font(.title)
 
             Spacer()
 
-            Button("Reset", action: viewModel.resetGame)
+            Button("Reset", action: game.resetGame)
         }
-        .onAppear(perform: viewModel.startGame)
-        .alert("Game over!", isPresented: $viewModel.gameIsFinished) {
-            Button("Reset Game", action: viewModel.resetGame)
+        .onAppear(perform: game.startGame)
+        .alert("Game over!", isPresented: $game.gameIsFinished) {
+            Button("Reset Game", action: game.resetGame)
         }
     }
 }
 
 struct GameView_Previews: PreviewProvider {
     static var previews: some View {
-        GameView()
+        GameView(game: .init())
     }
 }
