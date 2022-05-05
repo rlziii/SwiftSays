@@ -45,7 +45,7 @@ struct StackedTileView_Previews: PreviewProvider {
         StackedTileView(
             allowUserInput: true,
             highlightedTile: .none,
-            action: { _ in}
+            action: { _ in }
         )
     }
 }
