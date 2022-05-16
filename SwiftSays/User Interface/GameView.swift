@@ -14,7 +14,7 @@ struct GameView: View {
             .overlay(CenterView())
             .disabled(!game.allowUserInput)
 
-            Text("Level: \(game.currentLevel)")
+            Text("Score: \(game.score)")
                 .font(.title)
 
             Spacer()

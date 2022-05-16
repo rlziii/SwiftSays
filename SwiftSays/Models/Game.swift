@@ -7,7 +7,7 @@ class Game: ObservableObject {
     @Published private(set) var highlightedTile: Tile?
     @Published var gameIsFinished = false
 
-    var currentLevel: Int { max(0, gameInput.count - 1) }
+    var score: Int { max(0, gameInput.count - 1) }
 
     // MARK: - Private Properties
 
