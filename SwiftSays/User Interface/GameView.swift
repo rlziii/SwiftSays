@@ -25,7 +25,7 @@ struct GameView: View {
         }
         .onAppear(perform: game.startGame)
         .alert("Game over!", isPresented: $game.gameIsFinished) {
-            Button("Reset Game", action: game.resetGame)
+            Button("Play Again", action: game.resetGame)
         }
     }
 }
