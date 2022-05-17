@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct BottomButtonView: View {
-    @Binding var isPlaying: Bool
+    let isPlaying: Bool
     let startAction: @MainActor () -> Void
     let resetAction: @MainActor () -> Void
 
@@ -37,12 +37,12 @@ struct BottomButtonView_Previews: PreviewProvider {
     static var previews: some View {
         VStack {
             BottomButtonView(
-                isPlaying: .constant(true),
+                isPlaying: true,
                 startAction: {},
                 resetAction: {}
             )
             BottomButtonView(
-                isPlaying: .constant(false),
+                isPlaying: false,
                 startAction: {},
                 resetAction: {}
             )

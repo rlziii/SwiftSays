@@ -21,7 +21,7 @@ struct GameView: View {
             ScoreView(game.score)
 
             BottomButtonView(
-                isPlaying: $game.isPlaying,
+                isPlaying: game.isPlaying,
                 startAction: game.startGame,
                 resetAction: game.resetGame
             )
