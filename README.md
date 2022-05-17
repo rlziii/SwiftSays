@@ -1,4 +1,4 @@
-# SwiftSays
+# Swift Says
 
 ## Info
 * Underdog Devs Xcoders
