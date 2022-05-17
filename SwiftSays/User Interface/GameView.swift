@@ -27,7 +27,7 @@ struct GameView: View {
             )
         }
         .alert("Game over!", isPresented: $game.showGameOver) {
-            Button("OK", action: game.resetGame)
+            Button("OK") { game.resetGame() }
         }
     }
 }

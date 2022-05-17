@@ -2,8 +2,8 @@ import SwiftUI
 
 struct BottomButtonView: View {
     @Binding var isPlaying: Bool
-    let startAction: () -> Void
-    let resetAction: () -> Void
+    let startAction: @MainActor () -> Void
+    let resetAction: @MainActor () -> Void
 
     private var title: LocalizedStringKey {
         isPlaying ? "Reset" : "Start Game"
@@ -27,6 +27,7 @@ struct BottomButtonView: View {
         .cornerRadius(.infinity)
     }
 
+    @MainActor
     private func action() {
         isPlaying ? resetAction() : startAction()
     }

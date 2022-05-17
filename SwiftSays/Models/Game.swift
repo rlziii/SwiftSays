@@ -1,5 +1,6 @@
 import Foundation
 
+@MainActor
 class Game: ObservableObject {
     // MARK: - Public Properties
 
@@ -82,7 +83,6 @@ class Game: ObservableObject {
         advanceGameLoop()
     }
 
-    @MainActor
     private func highlightGameInputs() async throws {
         try await Task.sleep(seconds: 0.5)
 

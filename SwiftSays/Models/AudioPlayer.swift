@@ -24,11 +24,10 @@ actor AudioPlayer {
 
     // MARK: - Public Methods
 
-    @MainActor
     func playSound(for tile: Tile) async throws {
-        await stopAllNotes()
+        stopAllNotes()
 
-        let note = await midiNote(for: tile)
+        let note = midiNote(for: tile)
 
         sampler.startNote(note, withVelocity: 127, onChannel: 0)
         try await Task.sleep(seconds: 0.3)
