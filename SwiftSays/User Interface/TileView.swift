@@ -26,9 +26,7 @@ struct TileView: View {
 
     var body: some View {
         Button {
-            Task {
-                try await action(tile)
-            }
+            try await action(tile)
         } label: {
             color
                 .scaledToFit()

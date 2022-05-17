@@ -5,7 +5,8 @@ class Game: ObservableObject {
 
     @Published private(set) var allowUserInput = false
     @Published private(set) var highlightedTile: Tile?
-    @Published var gameIsFinished = false
+    @Published var isPlaying = false
+    @Published var showGameOver = false
 
     var score: Int { max(0, gameInput.count - 1) }
 
@@ -28,16 +29,15 @@ class Game: ObservableObject {
     // MARK: - Public Methods
 
     func startGame() {
+        isPlaying = true
         advanceGameLoop()
     }
 
     func resetGame() {
         gameInput = []
         userInput = []
-        gameIsFinished = false
+        isPlaying = false
         allowUserInput = false
-
-        advanceGameLoop()
     }
 
     func action(for tile: Tile) async throws {
@@ -49,7 +49,7 @@ class Game: ObservableObject {
     // MARK: - Private Methods
 
     private func advanceGameLoop() {
-        guard !gameIsFinished else {
+        guard isPlaying else {
             return
         }
 
@@ -68,7 +68,7 @@ class Game: ObservableObject {
     }
 
     private func nextGameInput() {
-        guard !gameIsFinished else {
+        guard isPlaying else {
             return
         }
 
@@ -106,7 +106,8 @@ class Game: ObservableObject {
         }
 
         if userInput[index] != gameInput[index] {
-            gameIsFinished = true
+            isPlaying = false
+            showGameOver = true
         }
     }
 }

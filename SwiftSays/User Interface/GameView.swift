@@ -5,6 +5,8 @@ struct GameView: View {
 
     var body: some View {
         VStack {
+            TitleView()
+
             Spacer()
 
             StackedTileView(
@@ -14,18 +16,18 @@ struct GameView: View {
             .overlay(CenterView())
             .disabled(!game.allowUserInput)
 
-            Text("Score: \(game.score)")
-                .font(.title)
-
             Spacer()
 
-            Button("Reset", action: game.resetGame)
-                .buttonStyle(.borderedProminent)
-                .cornerRadius(.infinity)
+            ScoreView(game.score)
+
+            BottomButtonView(
+                isPlaying: $game.isPlaying,
+                startAction: game.startGame,
+                resetAction: game.resetGame
+            )
         }
-        .onAppear(perform: game.startGame)
-        .alert("Game over!", isPresented: $game.gameIsFinished) {
-            Button("Play Again", action: game.resetGame)
+        .alert("Game over!", isPresented: $game.showGameOver) {
+            Button("OK", action: game.resetGame)
         }
     }
 }
