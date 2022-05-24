@@ -43,7 +43,7 @@ actor AudioPlayer {
     }
 
     private func midiNote(for tile: Tile) -> UInt8 {
-        // https://computermusicresource.com/midikeys.html
+        // Reference: https://computermusicresource.com/midikeys.html
         switch tile {
         case .green:
             // E (3rd octave)
