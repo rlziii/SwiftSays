@@ -1,6 +1,6 @@
 import AVFAudio
 
-actor AudioPlayer {
+class AudioPlayer {
     // MARK: - Private Properties
 
     private let engine: AVAudioEngine
@@ -24,14 +24,15 @@ actor AudioPlayer {
 
     // MARK: - Public Methods
 
-    func playSound(for tile: Tile) async throws {
+    func playSound(for tile: Tile) {
         stopAllNotes()
 
         let note = midiNote(for: tile)
 
         sampler.startNote(note, withVelocity: 127, onChannel: 0)
-        try await Task.sleep(seconds: 0.3)
-        sampler.stopNote(note, onChannel: 0)
+        DispatchQueue.global().asyncAfter(deadline: .now() + 0.3) { [weak self] in
+            self?.sampler.stopNote(note, onChannel: 0)
+        }
     }
 
     // MARK: - Private Methods

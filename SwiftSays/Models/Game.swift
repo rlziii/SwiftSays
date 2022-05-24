@@ -1,6 +1,5 @@
 import Foundation
 
-@MainActor
 class Game: ObservableObject {
     // MARK: - Public Properties
 
@@ -41,8 +40,8 @@ class Game: ObservableObject {
         allowUserInput = false
     }
 
-    func action(for tile: Tile) async throws {
-        try await audioPlayer.playSound(for: tile)
+    func action(for tile: Tile) {
+        audioPlayer.playSound(for: tile)
         userInput.append(tile)
         advanceGameLoop()
     }
@@ -78,23 +77,52 @@ class Game: ObservableObject {
         let tile = Tile.allCases.randomElement()!
         gameInput.append(tile)
 
-        Task { try await highlightGameInputs() }
+        highlightGameInputs()
 
         advanceGameLoop()
     }
 
-    private func highlightGameInputs() async throws {
-        try await Task.sleep(seconds: 0.5)
+    private func highlightGameInputs() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
+            guard let self = self else { return }
 
-        allowUserInput = false
-        for tile in gameInput {
-            highlightedTile = tile
-            try await audioPlayer.playSound(for: tile)
-            try await Task.sleep(seconds: 0.3)
-            highlightedTile = nil
-            try await Task.sleep(seconds: 0.1)
+            self.allowUserInput = false
+
+            let operationQueue = OperationQueue()
+            operationQueue.maxConcurrentOperationCount = 1
+
+            for tile in self.gameInput {
+                let operation = BlockOperation { [weak self] in
+                    let dispatchGroup = DispatchGroup()
+                    dispatchGroup.enter()
+
+                    DispatchQueue.main.async { [weak self] in
+                        guard let self = self else { return }
+                        self.highlightedTile = tile
+                        self.audioPlayer.playSound(for: tile)
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) { [weak self] in
+                            guard let self = self else { return }
+                            self.highlightedTile = nil
+
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                                dispatchGroup.leave()
+                            }
+                        }
+                    }
+
+                    dispatchGroup.wait()
+                }
+
+                operationQueue.addOperation(operation)
+            }
+
+            operationQueue.addOperation {
+                DispatchQueue.main.async { [weak self] in
+                    guard let self = self else { return }
+                    self.allowUserInput = true
+                }
+            }
         }
-        allowUserInput = true
     }
 
     private func checkCurrentInput() {

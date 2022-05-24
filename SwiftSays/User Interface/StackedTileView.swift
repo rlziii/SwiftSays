@@ -2,7 +2,7 @@ import SwiftUI
 
 struct StackedTileView: View {
     let highlightedTile: Tile?
-    let action: (Tile) async throws -> Void
+    let action: (Tile) -> Void
 
     var body: some View {
         VStack(spacing: 0) {

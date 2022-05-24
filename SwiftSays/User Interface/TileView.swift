@@ -3,7 +3,7 @@ import SwiftUI
 struct TileView: View {
     let tile: Tile
     let highlighted: Bool
-    let action: (Tile) async throws -> Void
+    let action: (Tile) -> Void
 
     private var color: Color {
         switch tile {
@@ -18,7 +18,7 @@ struct TileView: View {
         }
     }
 
-    init(_ tile: Tile, highlighted: Bool, action: @escaping (Tile) async throws -> Void) {
+    init(_ tile: Tile, highlighted: Bool, action: @escaping (Tile) -> Void) {
         self.tile = tile
         self.highlighted = highlighted
         self.action = action
@@ -26,7 +26,7 @@ struct TileView: View {
 
     var body: some View {
         Button {
-            try await action(tile)
+            action(tile)
         } label: {
             color
                 .scaledToFit()
