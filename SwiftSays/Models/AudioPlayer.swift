@@ -1,6 +1,6 @@
 import AVFAudio
 
-actor AudioPlayer {
+class AudioPlayer {
     // MARK: - Private Properties
 
     private let engine: AVAudioEngine
