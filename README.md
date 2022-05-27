@@ -4,6 +4,8 @@
 * Underdog Devs Xcoders
 * 2022-05-25
 
+#### Note: Use the branches `StarterProject` and `FinishedProject` as appropriate.
+
 ## Presentation Summary
 When SwiftUI was released in 2019, it was launched alongside a declarative framework for processing values over time: Combine.
 However, in 2021 we gained access to all-new language features such as async/await that can describe asynchronous and concurrent operations using more synchronous-looking and structured patterns.
